@@ -32,15 +32,14 @@ import kotlinx.android.synthetic.main.dialog_nominal.et_dialogName
 import kotlinx.android.synthetic.main.dialog_nominal.et_dialogNominal
 import kotlinx.android.synthetic.main.dialog_nominal.view.*
 import kotlinx.android.synthetic.main.fragment_alt_money.*
+import org.koin.android.ext.android.inject
 
 
 class AltMoneyFragment : Fragment(R.layout.fragment_alt_money), ItemClickListener {
 
     private lateinit var spendingAdapter: SpendingAdapter
-    private lateinit var spendingViewModel: SpendingViewModel
     private var spendingList: ArrayList<Spending> = ArrayList()
-
-//    private var totalNominal: Long = 370000
+    val spendingViewModel by inject<SpendingViewModel>()
 
     private lateinit var binding: FragmentAltMoneyBinding
 
@@ -56,7 +55,7 @@ class AltMoneyFragment : Fragment(R.layout.fragment_alt_money), ItemClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         spendingAdapter = SpendingAdapter(this)
-        spendingViewModel = ViewModelProvider(requireActivity()).get(SpendingViewModel::class.java)
+//        spendingViewModel = ViewModelProvider(requireActivity()).get(SpendingViewModel::class.java)
         binding.apply {
             altNominal = String.format(getString(R.string.nominal_value), SeparatorHelper.longToString(SpendingPref.getTotalAlt(requireContext())))
             handler = this@AltMoneyFragment

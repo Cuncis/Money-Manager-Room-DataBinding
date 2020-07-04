@@ -12,10 +12,11 @@ import com.cuncisboss.moneymanager.adapter.MyPagerAdapter
 import com.cuncisboss.moneymanager.data.local.SpendingPref
 import com.cuncisboss.moneymanager.viewmodel.SpendingViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: SpendingViewModel
+    val viewModel by inject<SpendingViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity() {
                 builder.setMessage("Are You Sure Delete All Data ?")
                 builder.setPositiveButton("Yes") { dialog, _ ->
                     SpendingPref.clear(this)
-                    viewModel = ViewModelProvider(this).get(SpendingViewModel::class.java)
                     viewModel.deleteAllData()
                     dialog.dismiss()
                 }

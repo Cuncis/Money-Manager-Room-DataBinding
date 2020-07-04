@@ -27,16 +27,17 @@ import com.cuncisboss.moneymanager.util.Utils.Companion.textWatcherNoZero
 import com.cuncisboss.moneymanager.viewmodel.SpendingViewModel
 import kotlinx.android.synthetic.main.dialog_nominal.view.*
 import kotlinx.android.synthetic.main.fragment_main_money.*
+import org.koin.android.ext.android.inject
 
 
 class MainMoneyFragment : Fragment(R.layout.fragment_main_money), ItemClickListener {
 
     private lateinit var spendingAdapter: SpendingAdapter
-    private lateinit var spendingViewModel: SpendingViewModel
     private var spendingList: ArrayList<Spending> = ArrayList()
 
-//    private var totalNominal: Long = 3230000
     private lateinit var binding: FragmentMainMoneyBinding
+
+    val spendingViewModel by inject<SpendingViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +51,6 @@ class MainMoneyFragment : Fragment(R.layout.fragment_main_money), ItemClickListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         spendingAdapter = SpendingAdapter(this)
-        spendingViewModel = ViewModelProvider(requireActivity()).get(SpendingViewModel::class.java)
         binding.apply {
             mainNominal = String.format(getString(R.string.nominal_value), SeparatorHelper.longToString(SpendingPref.getTotalMain(requireContext())))
             mainViewModel = spendingViewModel
