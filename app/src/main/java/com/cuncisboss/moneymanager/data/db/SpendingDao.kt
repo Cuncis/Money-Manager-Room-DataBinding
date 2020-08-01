@@ -17,4 +17,9 @@ interface SpendingDao {
     @Query("SELECT * FROM speding_table WHERE type =:type")
     fun getAllSpending(type: Int): LiveData<List<Spending>>
 
+    @Update
+    suspend fun updateData(spending: Spending)
+
+    @Delete
+    suspend fun deleteData(spending: Spending)
 }

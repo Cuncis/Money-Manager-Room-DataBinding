@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_reset"
-        android:icon="@drawable/ic_baseline_autorenew"
+        android:icon="@drawable/ic_baseline_delete_forever"
         android:title="@string/reset"
         app:showAsAction="always"/>
 </menu>

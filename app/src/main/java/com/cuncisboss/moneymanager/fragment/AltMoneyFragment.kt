@@ -39,7 +39,7 @@ class AltMoneyFragment : Fragment(R.layout.fragment_alt_money), ItemClickListene
 
     private lateinit var spendingAdapter: SpendingAdapter
     private var spendingList: ArrayList<Spending> = ArrayList()
-    val spendingViewModel by inject<SpendingViewModel>()
+    private val spendingViewModel by inject<SpendingViewModel>()
 
     private lateinit var binding: FragmentAltMoneyBinding
 
@@ -55,7 +55,6 @@ class AltMoneyFragment : Fragment(R.layout.fragment_alt_money), ItemClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         spendingAdapter = SpendingAdapter(this)
-//        spendingViewModel = ViewModelProvider(requireActivity()).get(SpendingViewModel::class.java)
         binding.apply {
             altNominal = String.format(getString(R.string.nominal_value), SeparatorHelper.longToString(SpendingPref.getTotalAlt(requireContext())))
             handler = this@AltMoneyFragment
@@ -155,8 +154,61 @@ class AltMoneyFragment : Fragment(R.layout.fragment_alt_money), ItemClickListene
     }
 
     override fun onItemClick(view: View, spending: Spending) {
-        Toast.makeText(requireContext(), "Click ${spending.name}", Toast.LENGTH_SHORT).show()
+        dialogAlert(spending)
     }
 
+    private fun dialogAlert(spending: Spending) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setCancelable(true)
+
+        val list = arrayOf("Update", "Delete")
+        builder.setItems(list) { dialog, position ->
+            if (list[position].equals("update", true)) {
+                dialogUpdate(spending)
+            } else {
+                dialogDelete(position, spending)
+            }
+            dialog.dismiss()
+        }
+        builder.create().show()
+    }
+
+    private fun dialogDelete(position: Int, spending: Spending) {
+        spendingViewModel.deleteData(spending)
+        spendingAdapter.removeItem(position-1)
+    }
+
+    private fun dialogUpdate(spending: Spending) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setCancelable(true)
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_nominal, null)
+        builder.setView(view)
+        val dialog = builder.create()
+        view.apply {
+            et_dialogName.setText(spending.name)
+            et_dialogNominal.setText(spending.nominal.toString())
+            btn_dialogSubmit.setOnClickListener {
+                when {
+                    et_dialogName.text.isEmpty() -> {
+                        et_dialogName.error = "Field can't be empty"
+                    }
+                    et_dialogNominal.text.isEmpty() -> {
+                        et_dialogNominal.error = "Field can't be empty"
+                    }
+                    else -> {
+                        spendingViewModel.updateData(Spending(
+                            et_dialogName.text.toString(),
+                            et_dialogNominal.text.toString().toLong(),
+                            ALT_VAL,
+                            DateHelper.getCurrentDatetime(),
+                            spending.id)
+                        )
+                        dialog.dismiss()
+                    }
+                }
+            }
+        }
+        dialog.show()
+    }
 
 }

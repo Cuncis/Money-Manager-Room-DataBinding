@@ -11,8 +11,8 @@ android {
         applicationId "com.cuncisboss.moneymanager"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -73,6 +73,4 @@ dependencies {
 
     // Material design
     implementation "com.google.android.material:material:$rootProject.materialVersion"
-
-
 }

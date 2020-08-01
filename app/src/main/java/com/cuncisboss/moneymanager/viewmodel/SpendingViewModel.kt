@@ -35,4 +35,11 @@ class SpendingViewModel(application: Application) : AndroidViewModel(application
         repository.deleteAllData()
     }
 
+    fun updateData(spending: Spending) = viewModelScope.launch(Dispatchers.IO) {
+        repository.updateData(spending)
+    }
+
+    fun deleteData(spending: Spending) = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteData(spending)
+    }
 }

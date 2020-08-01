@@ -39,6 +39,12 @@ class SpendingAdapter(private val itemClickListener: ItemClickListener): Recycle
         notifyDataSetChanged()
     }
 
+    fun removeItem(position: Int) {
+        spendingList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, spendingList.size)
+    }
+
     inner class SpendingViewHolder(val binding: ItemSpendingBinding)
         : RecyclerView.ViewHolder(binding.root)
 }

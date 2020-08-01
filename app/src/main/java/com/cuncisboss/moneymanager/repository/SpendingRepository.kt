@@ -17,4 +17,8 @@ class SpendingRepository(private val application: Application) {
 
     suspend fun deleteAllData() = spendingDao.deleteAllData()
 
+    suspend fun updateData(spending: Spending) = spendingDao.updateData(spending)
+
+    suspend fun deleteData(spending: Spending) = spendingDao.deleteData(spending)
+
 }

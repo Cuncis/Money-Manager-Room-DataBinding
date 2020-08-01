@@ -1,13 +1,12 @@
 package com.cuncisboss.moneymanager
 
-import android.content.DialogInterface
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import com.cuncisboss.moneymanager.adapter.MyPagerAdapter
 import com.cuncisboss.moneymanager.data.local.SpendingPref
 import com.cuncisboss.moneymanager.viewmodel.SpendingViewModel
